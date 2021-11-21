@@ -7,8 +7,10 @@ Puerto Sobrecargado (Overloaded Harbor)
 En un puerto de supertanqueros que cuenta con 3 muelles y un remolcador
 para la descarga de estos barcos de manera simultánea se desea conocer el tiempo
 promedio de espera de los barcos para ser cargados en el puerto.
+
 El puerto cuenta con un bote remolcador disponible para asistir a los tanqueros. Los tanqueros de cualquier tamaño necesitan de un remolcador para
 aproximarse al muelle desde el puerto y para dejar el muelle de vuelta al puerto.
+
 El tiempo de intervalo de arribo de cada barco distribuye mediante una función exponencial con λ = 8 horas. Existen tres tamaños distintos de tanqueros:
 pequeño, mediano y grande, la probabilidad correspondiente al tamaño de cada
 tanquero se describe en la tabla siguiente. El tiempo de carga de cada tanquero
@@ -31,6 +33,7 @@ del remolcador (esperando hasta que esté disponible) para llevarlo de vuelta al
 puerto, el tiempo de esta operación distribuye de manera exponencial con λ = 1
 hora. El traslado entre el puerto y un muelle por el remolcador sin tanquero
 distribuye exponencial con λ = 15 minutos.
+
 Cuando el remolcador termina la operación de aproximar un tanquero al
 muelle, entonces lleva al puerto al primer barco que esperaba por salir, en caso de
 que no exista barco por salir y algún muelle esté vacío, entonces el remolcador se
@@ -41,5 +44,6 @@ la operación de llevar algún barco al puerto, este inmediatamente lleva al pri
 barco esperando hacia el muelle vacío. En caso de que no haya barcos en los
 muelles, ni barcos en espera para ir al muelle, entonces el remolcador se queda
 en el puerto esperando por algún barco para llevar a un muelle.
+
 Simule completamente el funcionamiento del puerto. Determine el tiempo
 promedio de espera en los muelles.
