@@ -1,6 +1,6 @@
 # discrete-events
 A simulation project in python.
-The main objetive of this project is to simulate the events that follows:
+The main objetive of this project is to simulate the events that follow:
 
 Puerto Sobrecargado (Overloaded Harbor)
 
@@ -14,10 +14,13 @@ pequeño, mediano y grande, la probabilidad correspondiente al tamaño de cada
 tanquero se describe en la tabla siguiente. El tiempo de carga de cada tanquero
 depende de su tamaño y los parámetros de distribución normal que lo representa
 también se describen en la tabla siguiente.
-Tamaño Probabilidad de Arribo Tiempo de Carga
-Pequeño       0.25             µ = 9, σ2 = 1
-Mediano       0.25             µ = 12, σ2 = 2
-Grande        0.5              µ = 18, σ2 = 3
+
+|Tamaño  |Probabilidad de Arribo |Tiempo de Carga|
+|:---:|:---:| :---:|
+|Pequeño |      0.25             |µ = 9, σ2 = 1  |
+|Mediano |      0.25             |µ = 12, σ2 = 2 |
+|Grande  |      0.5              |µ = 18, σ2 = 3 | 
+
 De manera general, cuando un tanquero llega al puerto, espera en una cola
 (virtual) hasta que exista un muelle vacío y que un remolcador esté disponible
 para atenderle. Cuando el remolcador está disponible lo asiste para que pueda
