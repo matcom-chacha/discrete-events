@@ -1,11 +1,13 @@
 import heapq
 import queue
 import random
+import sys
 from rand_variables import gen_exp, gen_normal
 from utils import create_file, edit_file, write_data
 
 name = 0
 sim_time = 24
+max_t = sys.maxsize
 # problem constants for random vars:
 t_arrival_lamda = 8  # tankers arrival lambda parameter
 route1_lamda = 2  # route1 lambda parameter
@@ -191,18 +193,18 @@ def wait():
     if len(harbor_queue) > 0:  # take next arrival time
         next_at = harbor_queue[0][0]
     else:
-        next_at = 1000000
+        next_at = max_t
 
     if tb_pos == 1 and dock_tankers == 3:
-        next_at = 1000000
+        next_at = max_t
 
     if len(docks_heap) > 0:  # take next tanker to finished with cargo
         next_cargo_ft = docks_heap[0][0]
     else:
-        next_cargo_ft = 1000000
+        next_cargo_ft = max_t
 
     m = min(next_at, next_cargo_ft)
-    if m != 1000000:  # if there is an event waiting
+    if m != max_t:  # if there is an event waiting
         t = m  # update current simulation time
     edit_file(name, str(t) + ":" + " tugBoat ready to work.")
 
@@ -281,8 +283,9 @@ def get_stadistics():
 
 
 # run harbor simualtion
-def run_simulation(hours, name):
-    global t, sim_time
+def run_simulation(hours, fname):
+    global t, sim_time, name
+    name = fname
     sim_time = hours
     create_file(name, sim_time, "", True)
     gen_tanker_ship_arrival(t)
@@ -313,8 +316,6 @@ def run_simulation(hours, name):
     )
 
 
-import sys
-
 if "__main__" == __name__:
     if len(sys.argv) > 3:
         print("Unnexpected number or arguments")
@@ -326,6 +327,3 @@ if "__main__" == __name__:
             _, hours, name = sys.argv
         print("Starting simulation ", name, " with ", hours, " hours")
         run_simulation(int(hours), name)
-
-# al final añadir a la lista de eventos los tanqueros que llegaron y no frueron atendidos.
-# Decir que su tiempo de espera es mayor que el tiempo de llegada hasta el final?
