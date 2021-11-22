@@ -32,6 +32,7 @@ def edit_file(name, content):
 
     _file = open(complete_path, "a")
 
+    _file.write("\n")
     _file.write(content)
     _file.close()
 

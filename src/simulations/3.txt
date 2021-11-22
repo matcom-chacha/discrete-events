@@ -1,0 +1,29 @@
+Harbor simulation of 24 hours
+date: 21/11/2021 23:17:48
+
+
+0: tugBoat has nothing to do. Let's wait in 0
+0.677275304454084: tugBoat ready to work.
+0.677275304454084: tugBoat picks tanker #0 who arrived at 0.677275304454084
+0.8129729556125648: tugBoat leaves tanker #0 in the ducks
+0.8129729556125648: tugBoat leaves 1 solo
+6.618987150918485: tugBoat gets to 0 solo
+6.618987150918485: tugBoat picks tanker #1 who arrived at 0.722808518235491
+7.793780134934496: tugBoat leaves tanker #1 in the ducks
+7.793780134934496: tugBoat leaves 1 solo
+15.88809675765403: tugBoat gets to 0 solo
+15.88809675765403: tugBoat picks tanker #2 who arrived at 0.9020516347238566
+16.025362558632583: tugBoat leaves tanker #2 in the ducks
+16.025362558632583: tugBoat picks tanker0, who spend11.570719345984909hours loading from the docks
+17.04632014992487: tugBoat says gb to tanker 0 at the harbor
+17.04632014992487: tugBoat picks tanker #3 who arrived at 0.9384995615402889
+17.216949999662464: tugBoat leaves tanker #3 in the ducks
+17.216949999662464: tugBoat has nothing to do. Let's wait in 1
+24.94850735843329: tugBoat ready to work.
+ts_size: [1, 2, 0, 2, 2]
+ts_arrival: [0.677275304454084, 0.722808518235491, 0.9020516347238566, 0.9384995615402889, 0.9619931368276115]
+ts_route1_time: [0.1356976511584808, 1.1747929840160107, 0.13726580097855556, 0.17062984973759276, -1]
+ts_cargo_time: [11.570719345984909, 20.122351286115705, 8.923144799800708, 18.09089919483364, -1]
+ts_route2_time[1.020957591292286, -1, -1, -1, -1]
+ts_departure: [17.04632014992487, -1, -1, -1, -1]
+median delay: 16.369044845470786

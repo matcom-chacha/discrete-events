@@ -1,0 +1,39 @@
+Harbor simulation of 24 hours
+date: 21/11/2021 23:17:50
+
+
+0: tugBoat has nothing to do. Let's wait in 0
+0.3881723587383452: tugBoat ready to work.
+0.3881723587383452: tugBoat picks tanker #0 who arrived at 0.3881723587383452
+0.5632857322944873: tugBoat leaves tanker #0 in the ducks
+0.5632857322944873: tugBoat has nothing to do. Let's wait in 1
+0.6396160120839964: tugBoat ready to work.
+0.6396160120839964: tugBoat leaves 1 solo
+2.259339896375075: tugBoat gets to 0 solo
+2.259339896375075: tugBoat picks tanker #1 who arrived at 0.6396160120839964
+2.264515907420328: tugBoat leaves tanker #1 in the ducks
+2.264515907420328: tugBoat leaves 1 solo
+2.615789524374678: tugBoat gets to 0 solo
+2.615789524374678: tugBoat picks tanker #2 who arrived at 0.6932934515583328
+4.039913784597117: tugBoat leaves tanker #2 in the ducks
+4.039913784597117: tugBoat has nothing to do. Let's wait in 1
+12.028600139252175: tugBoat ready to work.
+12.028600139252175: tugBoat picks tanker1, who spend9.764084231831847hours loading from the docks
+14.061189332657245: tugBoat says gb to tanker 1 at the harbor
+14.061189332657245: tugBoat picks tanker #3 who arrived at 0.8818431207700235
+14.317169684634152: tugBoat leaves tanker #3 in the ducks
+14.317169684634152: tugBoat picks tanker0, who spend11.844441930369236hours loading from the docks
+14.352912233002717: tugBoat says gb to tanker 0 at the harbor
+14.352912233002717: tugBoat picks tanker #4 who arrived at 0.9004981074804911
+14.393566411113524: tugBoat leaves tanker #4 in the ducks
+14.393566411113524: tugBoat has nothing to do. Let's wait in 1
+22.784032061954896: tugBoat ready to work.
+22.784032061954896: tugBoat picks tanker4, who spend8.39046565084137hours loading from the docks
+24.657123214020572: tugBoat says gb to tanker 4 at the harbor
+ts_size: [1, 0, 2, 2, 0, 2]
+ts_arrival: [0.3881723587383452, 0.6396160120839964, 0.6932934515583328, 0.8818431207700235, 0.9004981074804911, 1.0295134694315469]
+ts_route1_time: [0.17511337355614207, 0.005176011045253277, 1.4241242602224398, 0.2559803519769069, 0.040654178110805884, -1]
+ts_cargo_time: [11.844441930369236, 9.764084231831847, 19.230116844817417, 20.952886194336408, 8.39046565084137, -1]
+ts_route2_time[0.035742548368565455, 2.032589193405069, -1, -1, 1.8730911520656763, -1]
+ts_departure: [14.352912233002717, 14.061189332657245, -1, -1, 24.657123214020572, -1]
+median delay: 17.047646100459232

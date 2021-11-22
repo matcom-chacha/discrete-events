@@ -1,0 +1,43 @@
+Harbor simulation of 24 hours
+date: 21/11/2021 23:17:52
+
+
+0: tugBoat has nothing to do. Let's wait in 0
+0.016301381139340147: tugBoat ready to work.
+0.016301381139340147: tugBoat picks tanker #0 who arrived at 0.016301381139340147
+1.1453183227848158: tugBoat leaves tanker #0 in the ducks
+1.1453183227848158: tugBoat leaves 1 solo
+6.932012229584023: tugBoat gets to 0 solo
+6.932012229584023: tugBoat picks tanker #1 who arrived at 0.38615735065787216
+7.721343782008613: tugBoat leaves tanker #1 in the ducks
+7.721343782008613: tugBoat leaves 1 solo
+9.027394442177249: tugBoat gets to 0 solo
+9.027394442177249: tugBoat picks tanker #2 who arrived at 0.4928898827829375
+9.117082742524302: tugBoat leaves tanker #2 in the ducks
+9.117082742524302: tugBoat has nothing to do. Let's wait in 1
+10.1900688428064: tugBoat ready to work.
+10.1900688428064: tugBoat picks tanker0, who spend9.044750520021585hours loading from the docks
+10.223274722071245: tugBoat says gb to tanker 0 at the harbor
+10.223274722071245: tugBoat picks tanker #3 who arrived at 0.5755582946356497
+10.433794903085822: tugBoat leaves tanker #3 in the ducks
+10.433794903085822: tugBoat has nothing to do. Let's wait in 1
+18.172638044913136: tugBoat ready to work.
+18.172638044913136: tugBoat picks tanker2, who spend9.055555302388836hours loading from the docks
+18.31351422593872: tugBoat says gb to tanker 2 at the harbor
+18.31351422593872: tugBoat picks tanker #4 who arrived at 0.6105038815282703
+18.7422761171132: tugBoat leaves tanker #4 in the ducks
+18.7422761171132: tugBoat has nothing to do. Let's wait in 1
+19.970100507779705: tugBoat ready to work.
+19.970100507779705: tugBoat picks tanker3, who spend9.536305604693885hours loading from the docks
+20.123546645354015: tugBoat says gb to tanker 3 at the harbor
+20.123546645354015: tugBoat picks tanker #5 who arrived at 0.6802262104435914
+20.166899730060607: tugBoat leaves tanker #5 in the ducks
+20.166899730060607: tugBoat has nothing to do. Let's wait in 1
+29.488267585685925: tugBoat ready to work.
+ts_size: [0, 2, 0, 0, 2, 1, 2]
+ts_arrival: [0.016301381139340147, 0.38615735065787216, 0.4928898827829375, 0.5755582946356497, 0.6105038815282703, 0.6802262104435914, 0.6815363009815507]
+ts_route1_time: [1.1290169416454756, 0.7893315524245893, 0.08968830034705264, 0.21052018101457723, 0.4287618911744779, 0.04335308470659046, -1]
+ts_cargo_time: [9.044750520021585, 22.50497842403, 9.055555302388836, 9.536305604693885, 18.76541448985453, 9.321367855625317, -1]
+ts_route2_time[0.033205879264843995, -1, 0.14087618102558513, 0.15344613757430894, -1, -1, -1]
+ts_departure: [10.223274722071245, -1, 18.31351422593872, 20.123546645354015, -1, -1, -1]
+median delay: 15.858528678268684
