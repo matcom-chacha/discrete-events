@@ -5,6 +5,7 @@ from rand_variables import gen_exp, gen_normal
 from utils import create_file, edit_file, write_data
 
 name = 0
+sim_time = 24
 # problem constants for random vars:
 t_arrival_lamda = 8  # tankers arrival lambda parameter
 route1_lamda = 2  # route1 lambda parameter
@@ -82,29 +83,24 @@ def initialize_arrays_site_for_new_tanker():
 
 
 # generar el tiempo de llegada del proximo tanque dada la hora de llegada del actual
-def gen_tanker_ship_arrival(ct):
-    global t_arrival_lamda, i, ts_arrival, ts_size, harbor_queue, nt
-    initialize_arrays_site_for_new_tanker()
+def gen_tanker_ship_arrival(ct, late_gen=False):
+    global t_arrival_lamda, i, ts_arrival, ts_size, harbor_queue, nt, t
     next_tanker_arrival = gen_exp(
-        t_arrival_lamda
+        1 / t_arrival_lamda
     )  # generar tiempo hasta el prox arribo
-    print(
-        "generando tanke no",
-        i,
-        " con ct= ",
-        ct,
-        " y diferencia de ",
-        next_tanker_arrival,
-    )
+
     next_tanker_arrival += ct  # definir hora de llegada del prox barco sumando el tiempo actual al que demora el arribo
-    print("hora de arrivo de tanke no,", i, " es ", next_tanker_arrival)
-    ts_arrival[i] = next_tanker_arrival
-    ts_size[i] = define_tanker_size()  # definir el tamaño del barco
-    nt += 1  # update tankers in simulation
-    heapq.heappush(
-        harbor_queue, (next_tanker_arrival, i)
-    )  # añadir barco a la cola del puerto
-    i += 1  # update last tanker index
+    if next_tanker_arrival <= sim_time:
+        if late_gen and next_tanker_arrival < t:
+            return
+        initialize_arrays_site_for_new_tanker()
+        ts_arrival[i] = next_tanker_arrival
+        ts_size[i] = define_tanker_size()  # definir el tamaño del barco
+        nt += 1  # update tankers in simulation
+        heapq.heappush(
+            harbor_queue, (next_tanker_arrival, i)
+        )  # añadir barco a la cola del puerto
+        i += 1  # update last tanker index
 
 
 # generate cargo time for a tanker of a given size s
@@ -128,16 +124,10 @@ def take_tanker_to_dock():
         + " who arrived at "
         + str(tanker_ship_atime),
     )
-    print(
-        "sending current time ",
-        tanker_ship_atime,
-        " when real arrival time for tank ",
-        tanker_ship_index,
-        " is ",
-        ts_arrival[tanker_ship_index],
-    )
+
     gen_tanker_ship_arrival(tanker_ship_atime)  # generate next arrival
-    r1_time = gen_exp(route1_lamda)  # generate route 1 time for this tanker
+
+    r1_time = gen_exp(1 / route1_lamda)  # generate route 1 time for this tanker
     ts_route1_time[tanker_ship_index] = r1_time
     t += r1_time  # update current simulation time
     edit_file(
@@ -162,7 +152,7 @@ def take_tanker_to_dock():
 # tugBoat cross to the other side of the bay
 def cross_solo():
     global tb_pos, t, tb_route_lamda
-    solo_route_time = gen_exp(tb_route_lamda)  # generate route time for tugBoat
+    solo_route_time = gen_exp(1 / tb_route_lamda)  # generate route time for tugBoat
     edit_file(name, str(t) + ":" + " tugBoat leaves " + str(tb_pos) + " solo")
     t += solo_route_time  # update current simulation time
     tb_pos = abs(tb_pos - 1)  # toggle tugBoat position
@@ -171,30 +161,55 @@ def cross_solo():
 
 # tugBoat waits for next tanker arrival or a tanker that finishes with cargo
 def wait():
-    global harbor_queue, dock_heap, t
+    global harbor_queue, docks_heap, t
+
+    if len(harbor_queue) > 0:
+        narrival = harbor_queue[0]
+    else:
+        narrival = -1
+    if len(docks_heap) > 0:
+        ncargof = docks_heap[0]
+    else:
+        ncargof = -1
+
+    edit_file(
+        name,
+        str(t)
+        + ": "
+        + str(len(harbor_queue))
+        + " tanker(s) on the harbor. "
+        + str(dock_tankers)
+        + " on the docks. Next arrival: "
+        + str(narrival)
+        + ". Next tanker to finish loading: "
+        + str(ncargof),
+    )
+
     edit_file(
         name, str(t) + ":" + " tugBoat has nothing to do. Let's wait in " + str(tb_pos)
     )
     if len(harbor_queue) > 0:  # take next arrival time
         next_at = harbor_queue[0][0]
     else:
-        next_at = 1000
+        next_at = 1000000
 
     if tb_pos == 1 and dock_tankers == 3:
-        next_at = 1000
+        next_at = 1000000
 
     if len(docks_heap) > 0:  # take next tanker to finished with cargo
         next_cargo_ft = docks_heap[0][0]
     else:
-        next_cargo_ft = 1000
+        next_cargo_ft = 1000000
 
-    t = min(next_at, next_cargo_ft)  # update current simulation time
+    m = min(next_at, next_cargo_ft)
+    if m != 1000000:  # if there is an event waiting
+        t = m  # update current simulation time
     edit_file(name, str(t) + ":" + " tugBoat ready to work.")
 
 
 # atender puerto
 def attend_harbor():
-    global tb_pos, harbor_queue, dock_tankers, dock_heap
+    global tb_pos, harbor_queue, dock_tankers, docks_heap
     if tb_pos == 0:  # if tugboat in harbor
         # if there are tankers awaiting in the harbor and there are free docks
         if len(harbor_queue) > 0 and harbor_queue[0][0] <= t and dock_tankers < 3:
@@ -209,7 +224,7 @@ def attend_harbor():
 
 # return the first tanker that has completed the cicle to harbor
 def return_tanker_to_harbor():
-    global dock_heap, route2_lamda, ts_route2_time, t, ts_departure, dock_tankers, tb_pos, nt
+    global docks_heap, route2_lamda, ts_route2_time, t, ts_departure, dock_tankers, tb_pos, nt
     tanker_cargo_ft, tanker_ship_index = heapq.heappop(
         docks_heap
     )  # get first tanker ready to leave
@@ -217,13 +232,13 @@ def return_tanker_to_harbor():
         name,
         str(t)
         + ":"
-        + " tugBoat picks tanker"
+        + " tugBoat picks tanker #"
         + str(tanker_ship_index)
-        + ", who spend"
+        + ", who spend "
         + str(ts_cargo_time[tanker_ship_index])
-        + "hours loading from the docks",
+        + " hours loading from the docks",
     )
-    r2_time = gen_exp(route2_lamda)  # generate route 2 time for this tanker
+    r2_time = gen_exp(1 / route2_lamda)  # generate route 2 time for this tanker
     ts_route2_time[tanker_ship_index] = r2_time
     t += r2_time  # update current simulation time
     ts_departure[tanker_ship_index] = t  # update departure time for current tanker
@@ -231,7 +246,7 @@ def return_tanker_to_harbor():
         name,
         str(t)
         + ":"
-        + " tugBoat says gb to tanker "
+        + " tugBoat says gb to tanker #"
         + str(tanker_ship_index)
         + " at the harbor",
     )
@@ -242,7 +257,7 @@ def return_tanker_to_harbor():
 
 # atender muelle or serve_dock
 def attend_pier():
-    global tb_pos, dock_heap, dock_tankers, harbor_queue, t
+    global tb_pos, docks_heap, dock_tankers, harbor_queue, t
     if tb_pos == 1:  # if tugboat in the ducks
         # if there is a tanker ready to go back to the harbor
         if len(docks_heap) > 0 and docks_heap[0][0] <= t:
@@ -259,32 +274,41 @@ def attend_pier():
 def get_stadistics():
     global ts_departure, ts_arrival, i, nt
     # arreglar si finalmente se espera que todos los barcos salgan del puerto
-    delay = [ts_departure[x] - ts_arrival[x] for x in range(i) if ts_departure[x] != -1]
+    delay = [ts_departure[x] - ts_arrival[x] for x in range(i)]
     delay_media = sum(delay) / len(delay)
-    print("The media of waiting time for the tankers is:", delay_media)
+    print("The average waiting time for the tankers is:", delay_media)
     return delay_media
 
 
 # run harbor simualtion
-def run_simulation(sim_time, name):
-    global t
+def run_simulation(hours, name):
+    global t, sim_time
+    sim_time = hours
     create_file(name, sim_time, "", True)
     gen_tanker_ship_arrival(t)
-    while t < sim_time:
-        print("current time", t)
+    while t < sim_time or nt > 0:
+        if t < sim_time and nt == 0:
+            gen_tanker_ship_arrival(ts_arrival[i - 1], True)
         attend_harbor()
         attend_pier()
     delay = get_stadistics()
     write_data(
         name,
         [
+            "\n",
+            "------------------------------------------------------------------------------",
+            "Stadistics:",
+            "Total arrivals: " + str(i),
+            "small tankers arrivals: " + str(sta),
+            "medium tankers arrivals: " + str(mta),
+            "big tankers arrivals: " + str(bta),
             "ts_size: " + str(ts_size),
             "ts_arrival: " + str(ts_arrival),
             "ts_route1_time: " + str(ts_route1_time),
             "ts_cargo_time: " + str(ts_cargo_time),
             "ts_route2_time" + str(ts_route2_time),
             "ts_departure: " + str(ts_departure),
-            "median delay: " + str(delay),
+            "average delay: " + str(delay),
         ],
     )
 
@@ -300,7 +324,7 @@ if "__main__" == __name__:
             hours = 24
         else:
             _, hours, name = sys.argv
-        print("Starting simulation with ", hours, " hours and", name, " name")
+        print("Starting simulation ", name, " with ", hours, " hours")
         run_simulation(int(hours), name)
 
 # al final añadir a la lista de eventos los tanqueros que llegaron y no frueron atendidos.

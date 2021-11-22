@@ -1,45 +1,54 @@
 Harbor simulation of 24 hours
-date: 21/11/2021 23:17:20
+date: 22/11/2021 01:56:39
 
 
+0: 1 tanker(s) on the harbor. 0 on the docks. Next arrival: (4.694404129473452, 0). Next tanker to finish loading: -1
 0: tugBoat has nothing to do. Let's wait in 0
-0.1402744951986893: tugBoat ready to work.
-0.1402744951986893: tugBoat picks tanker #0 who arrived at 0.1402744951986893
-0.7452442852212229: tugBoat leaves tanker #0 in the ducks
-0.7452442852212229: tugBoat has nothing to do. Let's wait in 1
-0.7505139862102059: tugBoat ready to work.
-0.7505139862102059: tugBoat leaves 1 solo
-1.8796566084923014: tugBoat gets to 0 solo
-1.8796566084923014: tugBoat picks tanker #1 who arrived at 0.7505139862102059
-2.7948329117623154: tugBoat leaves tanker #1 in the ducks
-2.7948329117623154: tugBoat leaves 1 solo
-6.136735660643991: tugBoat gets to 0 solo
-6.136735660643991: tugBoat picks tanker #2 who arrived at 0.787481067597953
-6.2240953421755645: tugBoat leaves tanker #2 in the ducks
-6.2240953421755645: tugBoat has nothing to do. Let's wait in 1
-10.65042203054059: tugBoat ready to work.
-10.65042203054059: tugBoat picks tanker0, who spend9.905177745319367hours loading from the docks
-10.810061710322016: tugBoat says gb to tanker 0 at the harbor
-10.810061710322016: tugBoat picks tanker #3 who arrived at 1.0057388655705468
-10.960493896155862: tugBoat leaves tanker #3 in the ducks
-10.960493896155862: tugBoat has nothing to do. Let's wait in 1
-14.371388267565353: tugBoat ready to work.
-14.371388267565353: tugBoat picks tanker2, who spend8.147292925389788hours loading from the docks
-14.376499855425793: tugBoat says gb to tanker 2 at the harbor
-14.376499855425793: tugBoat picks tanker #4 who arrived at 1.1514748305615545
-15.017479323904887: tugBoat leaves tanker #4 in the ducks
-15.017479323904887: tugBoat has nothing to do. Let's wait in 1
-15.211034889185978: tugBoat ready to work.
-15.211034889185978: tugBoat picks tanker1, who spend12.416201977423663hours loading from the docks
-16.846737913693563: tugBoat says gb to tanker 1 at the harbor
-16.846737913693563: tugBoat picks tanker #5 who arrived at 1.2029277595010561
-17.022489592006306: tugBoat leaves tanker #5 in the ducks
-17.022489592006306: tugBoat has nothing to do. Let's wait in 1
-30.547205735817204: tugBoat ready to work.
-ts_size: [0, 1, 0, 2, 2, 2, 0]
-ts_arrival: [0.1402744951986893, 0.7505139862102059, 0.787481067597953, 1.0057388655705468, 1.1514748305615545, 1.2029277595010561, 1.2925658924611774]
-ts_route1_time: [0.6049697900225336, 0.9151763032700141, 0.0873596815315735, 0.15043218583384715, 0.6409794684790937, 0.17575167831274316, -1]
-ts_cargo_time: [9.905177745319367, 12.416201977423663, 8.147292925389788, 19.75376197510727, 15.529726411912318, 18.262425771643716, -1]
-ts_route2_time[0.1596396797814268, 1.6357030245075834, 0.005111587860441462, -1, -1, -1, -1]
-ts_departure: [10.810061710322016, 16.846737913693563, 14.376499855425793, -1, -1, -1, -1]
-median delay: 13.451676643478175
+4.694404129473452: tugBoat ready to work.
+4.694404129473452: tugBoat picks tanker #0 who arrived at 4.694404129473452
+7.110194270852916: tugBoat leaves tanker #0 in the ducks
+7.110194270852916: 1 tanker(s) on the harbor. 1 on the docks. Next arrival: (10.38876942836044, 1). Next tanker to finish loading: (25.224089718639853, 0)
+7.110194270852916: tugBoat has nothing to do. Let's wait in 1
+10.38876942836044: tugBoat ready to work.
+10.38876942836044: tugBoat leaves 1 solo
+10.510488585370352: tugBoat gets to 0 solo
+10.510488585370352: tugBoat picks tanker #1 who arrived at 10.38876942836044
+12.541035479847501: tugBoat leaves tanker #1 in the ducks
+12.541035479847501: 1 tanker(s) on the harbor. 2 on the docks. Next arrival: (23.908900931116996, 2). Next tanker to finish loading: (25.224089718639853, 0)
+12.541035479847501: tugBoat has nothing to do. Let's wait in 1
+23.908900931116996: tugBoat ready to work.
+23.908900931116996: tugBoat leaves 1 solo
+24.40696931374041: tugBoat gets to 0 solo
+24.40696931374041: tugBoat picks tanker #2 who arrived at 23.908900931116996
+28.547429933439442: tugBoat leaves tanker #2 in the ducks
+28.547429933439442: tugBoat picks tanker #0, who spend 18.113895447786938 hours loading from the docks
+28.701224898603563: tugBoat says gb to tanker #0 at the harbor
+28.701224898603563: 0 tanker(s) on the harbor. 2 on the docks. Next arrival: -1. Next tanker to finish loading: (28.88405311039967, 1)
+28.701224898603563: tugBoat has nothing to do. Let's wait in 0
+28.88405311039967: tugBoat ready to work.
+28.88405311039967: tugBoat leaves 0 solo
+28.9179954495929: tugBoat gets to 1 solo
+28.9179954495929: tugBoat picks tanker #1, who spend 16.34301763055217 hours loading from the docks
+30.784007213269913: tugBoat says gb to tanker #1 at the harbor
+30.784007213269913: 0 tanker(s) on the harbor. 1 on the docks. Next arrival: -1. Next tanker to finish loading: (46.35087833513315, 2)
+30.784007213269913: tugBoat has nothing to do. Let's wait in 0
+46.35087833513315: tugBoat ready to work.
+46.35087833513315: tugBoat leaves 0 solo
+46.54141355524845: tugBoat gets to 1 solo
+46.54141355524845: tugBoat picks tanker #2, who spend 17.80344840169371 hours loading from the docks
+46.990720140084065: tugBoat says gb to tanker #2 at the harbor
+
+
+------------------------------------------------------------------------------
+Stadistics:
+Total arrivals: 3
+small tankers arrivals: 0
+medium tankers arrivals: 0
+big tankers arrivals: 3
+ts_size: [2, 2, 2]
+ts_arrival: [4.694404129473452, 10.38876942836044, 23.908900931116996]
+ts_route1_time: [2.415790141379464, 2.0305468944771503, 4.140460619699032]
+ts_cargo_time: [18.113895447786938, 16.34301763055217, 17.80344840169371]
+ts_route2_time[0.15379496516412025, 1.8660117636770124, 0.44930658483562]
+ts_departure: [28.701224898603563, 30.784007213269913, 46.990720140084065]
+average delay: 22.49462592100222
