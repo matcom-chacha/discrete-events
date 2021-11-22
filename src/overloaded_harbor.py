@@ -67,8 +67,18 @@ def define_tanker_size():
         return 2
 
 
+def initialize_arrays_site_for_new_tanker():
+    ts_size.append(-1)
+    ts_arrival.append(-1)
+    ts_route1_time.append(-1)
+    ts_cargo_time.append(-1)
+    ts_route2_time.append(-1)
+    ts_departure.append(-1)
+
+
 # generar el tiempo de llegada del proximo tanque dada la hora de llegada del actual
 def gen_tanker_ship_arrival(ct):
+    initialize_arrays_site_for_new_tanker()
     next_tanker_arrival = gen_exp(
         t_arrival_lamda
     )  # generar tiempo hasta el prox arribo
@@ -171,15 +181,22 @@ def attend_pier():
             wait()  # in_duck # hasta el proximo evento min(llegada de barco a puerto, bote listo en muelle)
 
 
+# calculate values required for the problem
+def get_stadistics():
+    delay = [ts_departure[x] - ts_arrival[x] for x in range(i - nt)]
+    delay_media = sum(delay) / len(delay)
+    print("The media of waiting time for the tankers is:", delay_media)
+
+
+# run harbor simualtion
 def run_simulation(sim_time):
     while t < sim_time:
         gen_tanker_ship_arrival(t)
         attend_harbor()
         attend_pier()
+    get_stadistics()
 
 
+run_simulation(24)
 # al final añadir a la lista de eventos los tanqueros que llegaron y no frueron atendidos.
 # Decir que su tiempo de espera es mayor que el tiempo de llegada hasta el final?
-
-# update number of tankers in simulation and st, mt and bt
-
