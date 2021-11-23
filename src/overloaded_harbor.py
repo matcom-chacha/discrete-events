@@ -7,10 +7,13 @@ from utils import create_file, edit_file, write_data
 
 
 class Harbor_Simulator:
-    def __init__(self, lambda_vals, cargo_med_vals, cargo_var_vals, fn=0, st=24):
-        self.name = fn  # name of a file to write simulation info
-        self.sim_time = st  # simulation time
+    def __init__(
+        self, lambda_vals, cargo_med_vals, cargo_var_vals, st=24, fn=0, createf=True
+    ):
         self.max_t = sys.maxsize
+        self.sim_time = st  # simulation time
+        self.name = fn  # name of a file to write simulation info
+        self.createf = createf  # Write results in a file
 
         # problem constants for random vars:
         self.t_arrival_lamda = lambda_vals[0]  # tankers arrival lambda parameter
@@ -46,8 +49,6 @@ class Harbor_Simulator:
         self.ts_cargo_time = []  # tanker's cargo time
         self.ts_route2_time = []  # tanker's route1 time Route2: dock->harbor
         self.ts_departure = []  # tankers departure
-
-        self.run_simulation()  # start simulation
 
     # define tanker size with o.25 prob of being small, 0.25 medium and 0.50 big
     def define_tanker_size(self):
@@ -100,15 +101,17 @@ class Harbor_Simulator:
         (tanker_ship_atime, tanker_ship_index) = heapq.heappop(
             self.harbor_queue
         )  # get first tanker awaiting at the harbor
-        edit_file(
-            self.name,
-            str(self.t)
-            + ":"
-            + " tugBoat picks tanker #"
-            + str(tanker_ship_index)
-            + " who arrived at "
-            + str(tanker_ship_atime),
-        )
+
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t)
+                + ":"
+                + " tugBoat picks tanker #"
+                + str(tanker_ship_index)
+                + " who arrived at "
+                + str(tanker_ship_atime),
+            )
 
         self.gen_tanker_ship_arrival(tanker_ship_atime)  # generate next arrival
 
@@ -117,14 +120,17 @@ class Harbor_Simulator:
         )  # generate route 1 time for this tanker
         self.ts_route1_time[tanker_ship_index] = r1_time
         self.t += r1_time  # update current simulation time
-        edit_file(
-            self.name,
-            str(self.t)
-            + ":"
-            + " tugBoat leaves tanker #"
-            + str(tanker_ship_index)
-            + " in the ducks",
-        )
+
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t)
+                + ":"
+                + " tugBoat leaves tanker #"
+                + str(tanker_ship_index)
+                + " in the ducks",
+            )
+
         cargo_time = self.gen_cargo_time(
             self.ts_size[tanker_ship_index]
         )  # generate cargo time for the tanker
@@ -140,16 +146,21 @@ class Harbor_Simulator:
         solo_route_time = gen_exp(
             1 / self.tb_route_lamda
         )  # generate route time for tugBoat
-        edit_file(
-            self.name,
-            str(self.t) + ":" + " tugBoat leaves " + str(self.tb_pos) + " solo",
-        )
+
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t) + ":" + " tugBoat leaves " + str(self.tb_pos) + " solo",
+            )
+
         self.t += solo_route_time  # update current simulation time
         self.tb_pos = abs(self.tb_pos - 1)  # toggle tugBoat position
-        edit_file(
-            self.name,
-            str(self.t) + ":" + " tugBoat gets to " + str(self.tb_pos) + " solo",
-        )
+
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t) + ":" + " tugBoat gets to " + str(self.tb_pos) + " solo",
+            )
 
     # tugBoat waits for next tanker arrival or a tanker that finishes with cargo
     def wait(self):
@@ -170,31 +181,34 @@ class Harbor_Simulator:
             next_cargo_ft = self.max_t
             ncargof = -1
 
-        edit_file(
-            self.name,
-            str(self.t)
-            + ": "
-            + str(len(self.harbor_queue))
-            + " tanker(s) on the harbor. "
-            + str(self.dock_tankers)
-            + " on the docks. Next arrival: "
-            + str(narrival)
-            + ". Next tanker to finish loading: "
-            + str(ncargof),
-        )
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t)
+                + ": "
+                + str(len(self.harbor_queue))
+                + " tanker(s) on the harbor. "
+                + str(self.dock_tankers)
+                + " on the docks. Next arrival: "
+                + str(narrival)
+                + ". Next tanker to finish loading: "
+                + str(ncargof),
+            )
 
-        edit_file(
-            self.name,
-            str(self.t)
-            + ":"
-            + " tugBoat has nothing to do. Let's wait in "
-            + str(self.tb_pos),
-        )
+            edit_file(
+                self.name,
+                str(self.t)
+                + ":"
+                + " tugBoat has nothing to do. Let's wait in "
+                + str(self.tb_pos),
+            )
 
         m = min(next_at, next_cargo_ft)
         if m != self.max_t:  # if there is an event waiting
             self.t = m  # update current simulation time
-        edit_file(self.name, str(self.t) + ":" + " tugBoat ready to work.")
+
+        if self.createf:
+            edit_file(self.name, str(self.t) + ":" + " tugBoat ready to work.")
 
     # atender puerto
     def attend_harbor(self):
@@ -220,16 +234,19 @@ class Harbor_Simulator:
         tanker_cargo_ft, tanker_ship_index = heapq.heappop(
             self.docks_heap
         )  # get first tanker ready to leave
-        edit_file(
-            self.name,
-            str(self.t)
-            + ":"
-            + " tugBoat picks tanker #"
-            + str(tanker_ship_index)
-            + ", who spend "
-            + str(self.ts_cargo_time[tanker_ship_index])
-            + " hours loading from the docks",
-        )
+
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t)
+                + ":"
+                + " tugBoat picks tanker #"
+                + str(tanker_ship_index)
+                + ", who spend "
+                + str(self.ts_cargo_time[tanker_ship_index])
+                + " hours loading from the docks",
+            )
+
         r2_time = gen_exp(
             1 / self.route2_lamda
         )  # generate route 2 time for this tanker
@@ -238,14 +255,16 @@ class Harbor_Simulator:
         self.ts_departure[
             tanker_ship_index
         ] = self.t  # update departure time for current tanker
-        edit_file(
-            self.name,
-            str(self.t)
-            + ":"
-            + " tugBoat says gb to tanker #"
-            + str(tanker_ship_index)
-            + " at the harbor",
-        )
+
+        if self.createf:
+            edit_file(
+                self.name,
+                str(self.t)
+                + ":"
+                + " tugBoat says gb to tanker #"
+                + str(tanker_ship_index)
+                + " at the harbor",
+            )
         self.dock_tankers -= 1  # update number of tankers in ducks
         self.tb_pos = 0  # update tugBoat position to harbor
         self.nt -= 1  # update number of tankers in the simulation
@@ -270,37 +289,45 @@ class Harbor_Simulator:
     def get_stadistics(self):
         delay = [self.ts_departure[x] - self.ts_arrival[x] for x in range(self.i)]
         delay_media = sum(delay) / len(delay)
-        print("The average waiting time for the tankers is:", delay_media)
         return delay_media
 
     # run harbor simualtion
     def run_simulation(self):
-        # name = fname XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx
-        # sim_time = hours XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        create_file(self.name, self.sim_time, "", True)
+        if self.createf:
+            create_file(self.name, self.sim_time, "", True)
+
         self.gen_tanker_ship_arrival(self.t)
         while self.t < self.sim_time or self.nt > 0:
             if self.t < self.sim_time and self.nt == 0:  # generate extra tanker if none
-                self.gen_tanker_ship_arrival(self.ts_arrival[self.i - 1], True)
+                if self.i > 0:
+                    pt = self.ts_arrival[self.i - 1]
+                else:
+                    pt = self.t
+                self.gen_tanker_ship_arrival(pt, True)
             self.attend_harbor()
             self.attend_pier()
+
         delay = self.get_stadistics()
-        write_data(
-            self.name,
-            [
-                "\n",
-                "------------------------------------------------------------------------------",
-                "Stadistics:",
-                "Total arrivals: " + str(self.i),
-                "small tankers arrivals: " + str(self.sta),
-                "medium tankers arrivals: " + str(self.mta),
-                "big tankers arrivals: " + str(self.bta),
-                "ts_size: " + str(self.ts_size),
-                "ts_arrival: " + str(self.ts_arrival),
-                "ts_route1_time: " + str(self.ts_route1_time),
-                "ts_cargo_time: " + str(self.ts_cargo_time),
-                "ts_route2_time" + str(self.ts_route2_time),
-                "ts_departure: " + str(self.ts_departure),
-                "average delay: " + str(delay),
-            ],
-        )
+
+        if self.createf:
+            write_data(
+                self.name,
+                [
+                    "\n",
+                    "------------------------------------------------------------------------------",
+                    "Stadistics:",
+                    "Total arrivals: " + str(self.i),
+                    "small tankers arrivals: " + str(self.sta),
+                    "medium tankers arrivals: " + str(self.mta),
+                    "big tankers arrivals: " + str(self.bta),
+                    "ts_size: " + str(self.ts_size),
+                    "ts_arrival: " + str(self.ts_arrival),
+                    "ts_route1_time: " + str(self.ts_route1_time),
+                    "ts_cargo_time: " + str(self.ts_cargo_time),
+                    "ts_route2_time" + str(self.ts_route2_time),
+                    "ts_departure: " + str(self.ts_departure),
+                    "average delay: " + str(delay),
+                ],
+            )
+
+        return delay
