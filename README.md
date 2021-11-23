@@ -47,3 +47,24 @@ en el puerto esperando por algún barco para llevar a un muelle.
 
 Simule completamente el funcionamiento del puerto. Determine el tiempo
 promedio de espera en los muelles.
+
+
+-----------------------------------------------------------
+
+Para ejecutar los experimentos correr la l\'inea en una consola en el directorio src del proyecto:
+
+```python main.py sim_time file_name```
+
+por ejemplo:
+
+```python main.py 100 harbor_simulation```
+
+Los parámetros son opcionales. De no proveerlos se asumirá que el tiempo de simulación (sim_time) es de 24 horas y que no se quiere escribir los datos resultantes en un archivo. Si se queren guardar estos especificar un nombre de archivo con el parámetro file_name.
+
+Para ejecutar múltiples simulaciones de una vez correr:
+
+```python test.py sim_time number_s creat_file```
+
+donde sim_time sería el tiempo de duración de las simulaciones, number_s el número de simulaciones deseadas y create_file indica si se quieren registar en varios archivos los datos de estas (cada uno con el nombre correspondiente a su número de simulación).
+
+Los tres parámetros son opcionales. De no proveerlos se toman 1000 simulaciones por default, un tiempo de 24 horas y no se guardan los datos.
