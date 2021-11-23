@@ -68,3 +68,7 @@ Para ejecutar múltiples simulaciones de una vez correr:
 donde sim_time sería el tiempo de duración de las simulaciones, number_s el número de simulaciones deseadas y create_file indica si se quieren registar en varios archivos los datos de estas (cada uno con el nombre correspondiente a su número de simulación).
 
 Los tres parámetros son opcionales. De no proveerlos se toman 1000 simulaciones por default, un tiempo de 24 horas y no se guardan los datos.
+
+-----------------------------------------------------------
+
+El informe del proyecto con todos la explicaciones necesarias se encuentra en la carpeta 'report'.
